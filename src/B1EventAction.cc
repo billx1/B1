@@ -32,6 +32,7 @@
 
 #include "G4Event.hh"
 #include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -59,6 +60,20 @@ void B1EventAction::EndOfEventAction(const G4Event*)
 {   
   // accumulate statistics in run action
   fRunAction->AddEdep(fEdep);
+
+  static G4Mutex outFileMutex = G4MUTEX_INITIALIZER;
+  static std::ofstream outFile("outFile.csv");
+  static G4bool first = true;
+
+  G4MUTEXLOCK(&outFileMutex);  // Lock while writing
+  if (first) {
+    first = false;
+    outFile << "#,eDep/keV" << std::endl;
+  }
+  if (fEdep > 0.) {
+    outFile << ',' << fEdep/keV << std::endl;
+  }
+  G4MUTEXUNLOCK(&outFileMutex);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
