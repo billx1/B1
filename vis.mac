@@ -6,6 +6,7 @@
 #
 # Use this open statement to create an OpenGL view:
 /vis/open OGL 600x600-0+0
+/vis/ogl/set/displayListLimit 9999999
 #
 # Use this open statement to create an OpenInventor view:
 #/vis/open OI
@@ -29,10 +30,6 @@
 #
 # Draw geometry:
 /vis/drawVolume
-#
-# Specify view angle:
-/vis/viewer/set/viewpointVector -1 0 0
-/vis/viewer/set/lightsVector -1 0 0
 #
 # Specify style (surface, wireframe, auxiliary edges,...)
 /vis/viewer/set/style wireframe
@@ -67,7 +64,7 @@
 #/vis/modeling/trajectories/drawByParticleID-0/set e+ yellow
 #
 # To superimpose all of the events from a given run:
-/vis/scene/endOfEventAction accumulate
+/vis/scene/endOfEventAction accumulate 1000000
 #
 # Decorations
 # Name
@@ -81,7 +78,7 @@
 #
 # Axes, scale, etc.
 /vis/scene/add/scale   # Simple scale line
-/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
+#/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
 /vis/scene/add/eventID # Drawn at end of event
 /vis/scene/add/date    # Date stamp
 /vis/scene/add/logo2D  # Simple logo
@@ -94,19 +91,15 @@
 /vis/set/colour        # Revert to default colour (white)
 /vis/set/lineWidth     # Revert to default line width (1.)
 #
-# Attach text to one edge of Shape1, with a small, fixed offset
-/vis/scene/add/text 0 6 -4 cm 18 4 4 Shape1
-# Attach text to one corner of Shape2, with a small, fixed offset
-/vis/scene/add/text 6 7 10 cm 18 4 4 Shape2
-#
 # To get nice view
 # Make the "World" box invisible
 /vis/geometry/set/visibility World 0 false
-# "Envelope" is transparent blue to represent water
-/vis/geometry/set/colour Envelope 0 0 0 1 .3
 /vis/viewer/set/style surface
 /vis/viewer/set/hiddenMarker true
-/vis/viewer/set/viewpointThetaPhi 120 150
+/vis/viewer/set/viewpointThetaPhi 70 135
+/vis/viewer/set/lightsThetaPhi 70 135
+#
+/vis/viewer/set/targetPoint 0 0 100 cm
 #
 # Re-establish auto refreshing and verbosity:
 /vis/viewer/set/autoRefresh true
