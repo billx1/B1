@@ -39,6 +39,7 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4VisAttributes.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -68,9 +69,10 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
   // World
   name ="World";
-  const G4double halfWorldSize = 1*m;
+  const G4double halfWorldSize = 10*m;
   G4VSolid* world_sol = new G4Box(name,halfWorldSize,halfWorldSize,halfWorldSize);
   G4LogicalVolume* world_log = new G4LogicalVolume(world_sol,air,name);
+  world_log->SetVisAttributes(G4VisAttributes::GetInvisible());
   G4VPhysicalVolume* world_phys
   = new G4PVPlacement(G4Transform3D(),       // Placement (defines world/global coordinates)
                       world_log,             //its logical volume

@@ -1,10 +1,10 @@
-cat outFile.csv | awk -F, '($1!="#"){print(1,$2)}' | whist.pl 0 1000 100 >x.hist
+cat outFile-$id.csv | awk -F, '($1!="#"){print(1,$2)}' | whist.pl 0 1100 110 >x-$id.hist
 gnuplot>
 set xlabel "keV"
 set title "Energy deposited in detector"
-plot "x.hist" with steps title "Beam: 1 MeV, Water: 20 cm"
-
-
+plot \
+"x-A.hist" with steps title "Beam: 1 MeV, Water: 20 cm", \
+"x-B.hist" with steps title "Beam: 1 MeV, Water: 0 cm"
 
 
 
@@ -12,3 +12,9 @@ plot "x.hist" with steps title "Beam: 1 MeV, Water: 20 cm"
 gnuplot>
 set terminal postscript eps color linewidth 2
 set output "x.eps"
+
+
+
+#,Config,Beam/keV,Water/cm,Detector/mm
+,A,1000,20,2
+,B,1000,0,2
